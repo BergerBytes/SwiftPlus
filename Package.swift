@@ -18,6 +18,7 @@ let package = Package(
         ),
         .testTarget(
             name: "SwiftPlusTests",
-            dependencies: ["SwiftPlus"]),
+            dependencies: ["SwiftPlus"]
+        ),
     ]
 )
