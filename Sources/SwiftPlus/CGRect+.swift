@@ -73,7 +73,7 @@ public extension CGRect {
     var diagonal: CGFloat {
         hypot(width, height)
     }
-    
+
     /// The diagonal of the rect squared.
     var diagonalSquared: CGFloat {
         pow(width, 2) + pow(height, 2)

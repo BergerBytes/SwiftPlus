@@ -10,7 +10,10 @@ let package = Package(
             targets: ["SwiftPlus"]
         ),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/Quick/Quick.git", from: "5.0.0"),
+        .package(url: "https://github.com/Quick/Nimble.git", from: "10.0.0"),
+    ],
     targets: [
         .target(
             name: "SwiftPlus",
@@ -18,7 +21,7 @@ let package = Package(
         ),
         .testTarget(
             name: "SwiftPlusTests",
-            dependencies: ["SwiftPlus"]
+            dependencies: ["SwiftPlus", "Quick", "Nimble"]
         ),
     ]
 )

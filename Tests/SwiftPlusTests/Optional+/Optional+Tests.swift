@@ -1,20 +1,33 @@
+import Nimble
+import Quick
 @testable import SwiftPlus
-import XCTest
 
-final class OptionalTests: XCTestCase {
-    override func setUpWithError() throws {}
+final class OptionalTests: QuickSpec {
+    override func spec() {
+        describe("Optional") {
+            describe("isNil") {
+                it("object is nil") {
+                    let foo: String? = nil
+                    expect(foo.isNil).to(beTrue())
+                }
 
-    override func tearDownWithError() throws {}
+                it("object is not nil") {
+                    let foo: String? = "bar"
+                    expect(foo.isNil).to(beFalse())
+                }
+            }
 
-    func test_isNil() {
-        let foo: String? = nil
-        XCTAssertTrue(foo.isNil)
-        XCTAssertFalse(foo.isNotNil)
-    }
+            describe("isNotNil") {
+                it("object is nil") {
+                    let foo: String? = nil
+                    expect(foo.isNotNil).to(beFalse())
+                }
 
-    func test_isNotNil() {
-        let foo: String? = "bar"
-        XCTAssertFalse(foo.isNil)
-        XCTAssertTrue(foo.isNotNil)
+                it("object is not nil") {
+                    let foo: String? = "bar"
+                    expect(foo.isNotNil).to(beTrue())
+                }
+            }
+        }
     }
 }
