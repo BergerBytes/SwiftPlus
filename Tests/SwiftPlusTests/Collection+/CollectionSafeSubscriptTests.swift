@@ -20,27 +20,4 @@ final class CollectionSafeSubscriptTests: XCTestCase {
         XCTAssertNil(array[safe: 4])
         XCTAssertNil(array[safe: 5])
     }
-
-    let performanceTestArraySize = 100_000
-    let performanceAccessCount = 10000
-
-    func test_safe_performance() throws {
-        let array = [Int](repeating: .max, count: performanceTestArraySize)
-
-        measure {
-            for _ in 0 ... performanceAccessCount {
-                _ = array[safe: Int.random(in: 0 ... performanceTestArraySize - 1)]
-            }
-        }
-    }
-
-    func test_unsafe_performance() throws {
-        let array = [Int](repeating: .max, count: performanceTestArraySize)
-
-        measure {
-            for _ in 0 ... performanceAccessCount {
-                _ = array[Int.random(in: 0 ... performanceTestArraySize - 1)]
-            }
-        }
-    }
 }
