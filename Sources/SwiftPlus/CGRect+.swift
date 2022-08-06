@@ -65,3 +65,12 @@ public extension CGRect {
         CGRect(center: CGPoint(x: centerX ?? self.centerX, y: centerY ?? self.centerY), size: size)
     }
 }
+
+// MARK: - CGRect + Measurements
+
+public extension CGRect {
+    /// The diagonal of the rect.
+    var diagonal: CGFloat {
+        hypot(width, height)
+    }
+}
