@@ -1,9 +1,6 @@
-import Foundation
+import CoreGraphics
 
 public extension CGPoint {
-    static var zero: CGPoint { .init(x: 0, y: 0) }
-    static var one: CGPoint { .init(x: 1, y: 1) }
-
     static func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
         .init(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
