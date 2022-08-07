@@ -120,16 +120,16 @@ final class CGRectTests: QuickSpec {
                     }
                 }
             }
-            
+
             describe("Measurements") {
                 describe("Diagonal") {
                     it("can get diagonal") {
                         let rect = CGRect(origin: .zero, size: .init(width: 2, height: 4))
-                        
+
                         expect(rect.diagonal).to(equal(4.47213595499958))
                         expect(rect.diagonal).to(equal(hypot(2, 4)))
                     }
-                    
+
                     it("can get diagonalSquared") {
                         let rect = CGRect(origin: .zero, size: .init(width: 4, height: 8))
 

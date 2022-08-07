@@ -12,26 +12,16 @@
 //  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-@testable import SwiftPlus
-import XCTest
+public extension Collection {
+    subscript(safe index: Index?) -> Iterator.Element? {
+        guard let index = index else {
+            return nil
+        }
 
-final class CollectionSafeSubscriptTests: XCTestCase {
-    override func setUpWithError() throws { }
-
-    override func tearDownWithError() throws { }
-
-    func test_index_exists() throws {
-        let array = [0, 1, 2, 3]
-        XCTAssertNotNil(array[safe: 0])
-        XCTAssertNotNil(array[safe: 1])
-        XCTAssertNotNil(array[safe: 2])
-        XCTAssertNotNil(array[safe: 3])
+        return indices.contains(index) ? self[index] : nil
     }
 
-    func test_index_doesNot_exist() throws {
-        let array = [0, 1, 2, 3]
-        XCTAssertNil(array[safe: -1])
-        XCTAssertNil(array[safe: 4])
-        XCTAssertNil(array[safe: 5])
+    var isNotEmpty: Bool {
+        !isEmpty
     }
 }
