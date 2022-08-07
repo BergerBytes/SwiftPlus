@@ -78,7 +78,7 @@ public extension ConcurrentQueue {
         return internalQueue.dequeueNext(where: predicate)
     }
 
-    func dequeueAll() -> some Sequence<Element> {
+    func dequeueAll() -> [Element] {
         defer { lock.unlock() }
         lock.lock()
 

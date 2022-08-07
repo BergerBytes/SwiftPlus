@@ -91,7 +91,7 @@ public extension Queue {
         return nil
     }
 
-    func dequeueAll() -> some Sequence<Element> {
+    func dequeueAll() -> [Element] {
         defer { removeAll() }
         guard count > 0 else {
             return []
