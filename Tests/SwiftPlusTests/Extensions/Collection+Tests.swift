@@ -50,7 +50,7 @@ final class CollectionTests: QuickSpec {
                     let array = [0, 1, 2, 3]
                     expect(array.isNotEmpty).to(beTrue())
                 }
-                
+
                 it("is false for empty array") {
                     let array = []
                     expect(array.isNotEmpty).to(beFalse())
