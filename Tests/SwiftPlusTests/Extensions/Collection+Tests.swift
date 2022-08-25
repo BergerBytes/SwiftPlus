@@ -68,6 +68,18 @@ final class CollectionTests: QuickSpec {
                     expect(test.any { $0 == 4 }).to(beFalse())
                 }
             }
+            
+            describe("all") {
+                it("returns true when all predicates are true") {
+                    let test = [1, 1, 1, 1, 1, 1]
+                    expect(test.all { $0 == 1 }).to(beTrue())
+                }
+
+                it("returns false when one predicate is false") {
+                    let test = [1, 2, 3, 6, 8, 10]
+                    expect(test.all { $0 == 1 }).to(beFalse())
+                }
+            }
         }
     }
 }
