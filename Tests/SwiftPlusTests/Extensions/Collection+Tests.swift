@@ -56,6 +56,18 @@ final class CollectionTests: QuickSpec {
                     expect(array.isNotEmpty).to(beFalse())
                 }
             }
+
+            describe("any") {
+                it("returns true when predicate is true") {
+                    let test = [1, 2, 3, 6, 8, 10]
+                    expect(test.any { $0 == 3 }).to(beTrue())
+                }
+
+                it("returns false when predicate is false") {
+                    let test = [1, 2, 3, 6, 8, 10]
+                    expect(test.any { $0 == 4 }).to(beFalse())
+                }
+            }
         }
     }
 }

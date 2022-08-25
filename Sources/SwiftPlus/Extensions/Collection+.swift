@@ -24,4 +24,19 @@ public extension Collection {
     var isNotEmpty: Bool {
         !isEmpty
     }
+
+    /// Returns true if any predicate returns true.
+    ///
+    /// Once a predicate returns true the function returns and execution stops.
+    /// - Parameter predicate: Predicate to invoke for each element.
+    /// - Returns: Returns true if any predicate returns true.
+    @inlinable func any(_ predicate: (Self.Element) throws -> Bool) rethrows -> Bool {
+        for element in self {
+            if try predicate(element) {
+                return true
+            }
+        }
+
+        return false
+    }
 }
