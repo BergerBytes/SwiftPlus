@@ -19,19 +19,19 @@ public extension CGPoint {
 }
 
 public extension CGPoint {
-    static func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    @inlinable static func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
         .init(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
     }
 
-    static func - (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
+    @inlinable static func - (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
         .init(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
     }
 
-    static func / (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+    @inlinable static func / (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
         .init(x: lhs.x / rhs, y: lhs.y / rhs)
     }
 
-    static func * (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
+    @inlinable static func * (lhs: CGPoint, rhs: CGFloat) -> CGPoint {
         .init(x: lhs.x * rhs, y: lhs.y * rhs)
     }
 }
@@ -92,7 +92,7 @@ public extension RandomAccessCollection where Element == CGPoint, Index == Int {
         return sumPoint / 6 / area
     }
 
-    func mean() -> CGPoint? {
+    @inlinable func mean() -> CGPoint? {
         if isEmpty { return nil }
 
         return reduce(.zero, +) / CGFloat(count)

@@ -14,12 +14,8 @@
 
 import Foundation
 
-public extension Optional {
-    @inlinable var isNil: Bool {
-        self == nil
-    }
-
-    @inlinable var isNotNil: Bool {
-        self != nil
+extension FloatingPoint {
+    @inlinable var isNotNan: Bool {
+        !isNaN
     }
 }

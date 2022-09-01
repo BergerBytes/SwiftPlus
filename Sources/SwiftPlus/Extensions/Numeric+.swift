@@ -14,12 +14,12 @@
 
 import Foundation
 
-public extension Optional {
-    @inlinable var isNil: Bool {
-        self == nil
+extension Numeric {
+    @inlinable var isZero: Bool {
+        self == 0
     }
 
-    @inlinable var isNotNil: Bool {
-        self != nil
+    @inlinable var isNonZero: Bool {
+        !isZero
     }
 }

@@ -13,13 +13,27 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import Foundation
+import Spatial
 
-public extension Optional {
-    @inlinable var isNil: Bool {
-        self == nil
+@available(macOS 13.0, *)
+@available(iOS 16.0, *)
+public extension Size3D {
+    @inlinable func volume() -> Double {
+        guard depth.isFinite, width.isFinite, height.isFinite else {
+            return .infinity
+        }
+
+        return depth * width * height
     }
+}
 
-    @inlinable var isNotNil: Bool {
-        self != nil
+@available(macOS 13.0, *)
+@available(iOS 16.0, *)
+public extension Vector3D {
+    /// Returns a new vector from a single-precision vector.
+    ///
+    /// - Parameter xyz: The source vector.
+    @inlinable init(_ xyz: simd_float3) {
+        self.init(simd_double3(xyz))
     }
 }

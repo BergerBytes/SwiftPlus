@@ -13,13 +13,17 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import Foundation
+import UniformTypeIdentifiers
 
-public extension Optional {
-    @inlinable var isNil: Bool {
-        self == nil
-    }
-
-    @inlinable var isNotNil: Bool {
-        self != nil
+public extension URL {
+    @available(iOS 14.0, *)
+    @available(macOS 11.0, *)
+    @inlinable
+    func mimeType() -> String {
+        if let mimeType = UTType(filenameExtension: pathExtension)?.preferredMIMEType {
+            return mimeType
+        } else {
+            return "application/octet-stream"
+        }
     }
 }

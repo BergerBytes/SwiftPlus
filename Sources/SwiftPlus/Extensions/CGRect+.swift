@@ -21,12 +21,12 @@ public extension CGRect {
     /// - Parameters:
     ///   - center: The center of the new rectangle
     ///   - size: The dimensions of the new rectangle
-    init(center: CGPoint, size: CGSize) {
+    @inlinable init(center: CGPoint, size: CGSize) {
         self.init(x: center.x - size.width / 2, y: center.y - size.height / 2, width: size.width, height: size.height)
     }
 
     /// The coordinates of this rectangles center
-    var center: CGPoint {
+    @inlinable var center: CGPoint {
         get { CGPoint(x: centerX, y: centerY) }
         set { centerX = newValue.x; centerY = newValue.y }
     }
@@ -34,7 +34,7 @@ public extension CGRect {
     /// The x-coordinate of this rectangles center
     /// - Note: Acts as a settable midX
     /// - Returns: The x-coordinate of the center
-    var centerX: CGFloat {
+    @inlinable var centerX: CGFloat {
         get { midX }
         set { origin.x = newValue - width * 0.5 }
     }
@@ -42,7 +42,7 @@ public extension CGRect {
     /// The y-coordinate of this rectangles center
     /// - Note: Acts as a settable midY
     /// - Returns: The y-coordinate of the center
-    var centerY: CGFloat {
+    @inlinable var centerY: CGFloat {
         get { midY }
         set { origin.y = newValue - height * 0.5 }
     }
@@ -52,21 +52,21 @@ public extension CGRect {
     /// Same-sized rectangle with a new center
     /// - Parameters center: The new center, ignored if nil
     /// - Returns: A new rectangle with the same size and a new center
-    func with(center: CGPoint?) -> CGRect {
+    @inlinable func with(center: CGPoint?) -> CGRect {
         CGRect(center: center ?? self.center, size: size)
     }
 
     /// Same-sized rectangle with a new center-x
     /// - Parameter centerX: The new center-x, ignored if nil
     /// - Returns: A new rectangle with the same size and a new center
-    func with(centerX: CGFloat?) -> CGRect {
+    @inlinable func with(centerX: CGFloat?) -> CGRect {
         CGRect(center: CGPoint(x: centerX ?? self.centerX, y: centerY), size: size)
     }
 
     /// Same-sized rectangle with a new center-y
     /// - Parameter centerY: The new center-y, ignored if nil
     /// - Returns: A new rectangle with the same size and a new center
-    func with(centerY: CGFloat?) -> CGRect {
+    @inlinable func with(centerY: CGFloat?) -> CGRect {
         CGRect(center: CGPoint(x: centerX, y: centerY ?? self.centerY), size: size)
     }
 
@@ -75,7 +75,7 @@ public extension CGRect {
     ///   - centerX:  The new center-x, ignored if nil
     ///   - centerY: The new center-y, ignored if nil
     /// - Returns: A new rectangle with the same size and a new center
-    func with(centerX: CGFloat?, centerY: CGFloat?) -> CGRect {
+    @inlinable func with(centerX: CGFloat?, centerY: CGFloat?) -> CGRect {
         CGRect(center: CGPoint(x: centerX ?? self.centerX, y: centerY ?? self.centerY), size: size)
     }
 }
@@ -84,12 +84,12 @@ public extension CGRect {
 
 public extension CGRect {
     /// The diagonal of the rect.
-    var diagonal: CGFloat {
+    @inlinable var diagonal: CGFloat {
         hypot(width, height)
     }
 
     /// The diagonal of the rect squared.
-    var diagonalSquared: CGFloat {
+    @inlinable var diagonalSquared: CGFloat {
         pow(width, 2) + pow(height, 2)
     }
 }

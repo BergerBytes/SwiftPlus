@@ -13,15 +13,19 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 public extension Collection {
-    subscript(safe index: Index?) -> Iterator.Element? {
+    @inlinable subscript(safe index: Index?) -> Iterator.Element? {
         guard let index = index else {
             return nil
         }
 
-        return indices.contains(index) ? self[index] : nil
+        return self[safe: index]
     }
 
-    var isNotEmpty: Bool {
+    @inlinable subscript(safe index: Index) -> Iterator.Element? {
+        indices.contains(index) ? self[index] : nil
+    }
+
+    @inlinable var isNotEmpty: Bool {
         !isEmpty
     }
 
@@ -39,7 +43,7 @@ public extension Collection {
 
         return false
     }
-    
+
     /// Returns true if all predicates returns true.
     ///
     /// Once a predicate returns false the function returns and execution stops.
