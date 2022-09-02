@@ -17,7 +17,7 @@
 
     @available(iOS 13.0, *)
     @available(macOS 10.15, *)
-    extension View {
+    public extension View {
         @ViewBuilder
         func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
             if condition {
