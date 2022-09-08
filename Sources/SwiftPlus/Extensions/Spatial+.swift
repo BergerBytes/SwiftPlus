@@ -13,6 +13,7 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import Foundation
+#if canImport(Spatial)
 import Spatial
 
 @available(macOS 13.0, *)
@@ -37,3 +38,4 @@ public extension Vector3D {
         self.init(simd_double3(xyz))
     }
 }
+#endif

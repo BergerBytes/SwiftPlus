@@ -27,9 +27,15 @@ public final class Queue<Element: Sendable> {
     public var count: Int { array.count - head }
 
     public init() { }
+    
+    public init(array: [Element?]) {
+        self.array = array
+    }
+}
 
-    public init(_ sequence: any Sequence<Element>) {
-        array = Array(sequence)
+public extension Queue {
+    convenience init<Collection: Sequence>(_ sequence: Collection) where Collection.Element == Element {
+        self.init(array: Array(sequence))
     }
 }
 

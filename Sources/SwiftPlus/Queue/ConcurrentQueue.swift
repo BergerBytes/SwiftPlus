@@ -23,7 +23,7 @@ public final class ConcurrentQueue<Element: Sendable> {
         internalQueue = .init()
     }
 
-    public init(_ sequence: any Sequence<Element>) {
+    public init<Collection: Sequence>(_ sequence: Collection ) where Collection.Element == Element {
         internalQueue = .init(sequence)
     }
 }
