@@ -15,6 +15,14 @@
 #if canImport(SwiftUI)
     import SwiftUI
 
+    #if canImport(UIKit)
+        import UIKit
+    #endif
+
+    #if canImport(AppKit)
+        import AppKit
+    #endif
+
     @available(macOS 10.15, *)
     @available(iOS 13.0, *)
     public extension Color {
@@ -27,5 +35,29 @@
                 opacity: alpha
             )
         }
+
+        #if canImport(UIKit) || canImport(AppKit)
+            @available(iOS 14.0, *)
+            @available(macOS 11, *)
+            func opaqueHex() -> UInt {
+                var red: CGFloat = 0
+                var green: CGFloat = 0
+                var blue: CGFloat = 0
+
+                #if canImport(UIKit)
+                    let color = UIColor(self)
+                #endif
+
+                #if canImport(AppKit)
+                    let color = NSColor(self)
+                #endif
+
+                color.getRed(&red, green: &green, blue: &blue, alpha: nil)
+
+                return (UInt(red * 255.0) << 16)
+                    + (UInt(green * 255.0) << 8)
+                    + UInt(blue * 255.0)
+            }
+        #endif
     }
 #endif

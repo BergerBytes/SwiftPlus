@@ -27,7 +27,7 @@ public final class Queue<Element: Sendable> {
     public var count: Int { array.count - head }
 
     public init() { }
-    
+
     public init(array: [Element?]) {
         self.array = array
     }
