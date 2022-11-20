@@ -12,7 +12,7 @@
 //  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-#if canImport(SwiftUI)
+#if canImport(SwiftUI) && (canImport(UIKit) || canImport(AppKit))
     import SwiftUI
 
     #if canImport(UIKit)
