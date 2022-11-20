@@ -17,9 +17,7 @@
 
     #if canImport(UIKit)
         import UIKit
-    #endif
-
-    #if canImport(AppKit)
+    #elseif canImport(AppKit)
         import AppKit
     #endif
 
@@ -46,9 +44,7 @@
 
                 #if canImport(UIKit)
                     let color = UIColor(self)
-                #endif
-
-                #if canImport(AppKit)
+                #elseif canImport(AppKit)
                     let color = NSColor(self)
                 #endif
 
