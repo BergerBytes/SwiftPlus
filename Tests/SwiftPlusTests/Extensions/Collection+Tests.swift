@@ -80,6 +80,52 @@ final class CollectionTests: QuickSpec {
                     expect(test.all { $0 == 1 }).to(beFalse())
                 }
             }
+
+            context("comparison") {
+                struct MinMaxTest {
+                    let property: Int
+                }
+
+                describe("max") {
+                    it("returns the element with the largest value of key path") {
+                        var array: [MinMaxTest] = [.init(property: 8), .init(property: 2), .init(property: 23)]
+
+                        var max = array.max(by: \.property)
+                        expect(max?.property).to(equal(23))
+
+                        array.append(.init(property: 200))
+                        max = array.max(by: \.property)
+                        expect(max?.property).to(equal(200))
+                    }
+
+                    it("returns nil for empty collections") {
+                        let array = [MinMaxTest]()
+
+                        let max = array.max(by: \.property)
+                        expect(max?.property).to(beNil())
+                    }
+                }
+
+                describe("min") {
+                    it("returns the element with the smallest value of key path") {
+                        var array: [MinMaxTest] = [.init(property: 8), .init(property: 2), .init(property: 23)]
+
+                        var max = array.min(by: \.property)
+                        expect(max?.property).to(equal(2))
+
+                        array.append(.init(property: 200))
+                        max = array.min(by: \.property)
+                        expect(max?.property).to(equal(2))
+                    }
+
+                    it("returns nil for empty collections") {
+                        let array = [MinMaxTest]()
+
+                        let max = array.min(by: \.property)
+                        expect(max?.property).to(beNil())
+                    }
+                }
+            }
         }
     }
 }

@@ -13,6 +13,10 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 public extension Collection {
+    @inlinable var isNotEmpty: Bool {
+        !isEmpty
+    }
+
     @inlinable subscript(safe index: Index?) -> Iterator.Element? {
         guard let index = index else {
             return nil
@@ -23,10 +27,6 @@ public extension Collection {
 
     @inlinable subscript(safe index: Index) -> Iterator.Element? {
         indices.contains(index) ? self[index] : nil
-    }
-
-    @inlinable var isNotEmpty: Bool {
-        !isEmpty
     }
 
     /// Returns true if any predicate returns true.
@@ -57,5 +57,40 @@ public extension Collection {
         }
 
         return true
+    }
+
+    /// Returns the maximum element in the sequence, using the given key path as the comparison between elements.
+    ///
+    /// - Parameter keyPath: They key path of the parameter that should be used to compare against.
+    /// - Returns: The sequence’s maximum element if the sequence is not empty; otherwise, nil.
+    @inlinable func max(by keyPath: KeyPath<Element, some Comparable>) -> Element? {
+        self.max { a, b in
+            a[keyPath: keyPath] < b[keyPath: keyPath]
+        }
+    }
+
+    /// Returns the minimum element in the sequence, using the given key path as the comparison between elements.
+    ///
+    /// - Parameter keyPath: They key path of the parameter that should be used to compare against.
+    /// - Returns: The sequence’s minimum element if the sequence is not empty; otherwise, nil.
+    @inlinable func min(by keyPath: KeyPath<Element, some Comparable>) -> Element? {
+        self.min { a, b in
+            a[keyPath: keyPath] < b[keyPath: keyPath]
+        }
+    }
+}
+
+public extension RangeReplaceableCollection {
+    /// Removes the first element of the collection satisfies the given predicate.
+    ///
+    /// - Parameter predicate: A closure that takes an element as its argument and returns a Boolean value that indicates whether the passed element represents a match.
+    /// - Returns: The removed element for which predicate returns true. If no elements in the collection satisfy the given predicate, returns nil.
+    @discardableResult
+    @inlinable mutating func removeFirst(where predicate: @escaping (Element) throws -> Bool) rethrows -> Element? {
+        guard let index = try firstIndex(where: predicate) else {
+            return nil
+        }
+
+        return remove(at: index)
     }
 }
