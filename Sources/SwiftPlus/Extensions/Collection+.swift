@@ -18,7 +18,7 @@ public extension Collection {
     }
 
     @inlinable subscript(safe index: Index?) -> Iterator.Element? {
-        guard let index = index else {
+        guard let index else {
             return nil
         }
 
@@ -57,6 +57,14 @@ public extension Collection {
         }
 
         return true
+    }
+
+    /// Returns a set containing the non-nil results of calling the given transformation with each element of this sequence.
+    ///
+    /// - Parameter transform: A closure that accepts an element of this sequence as its argument and returns an optional value.
+    /// - Returns: A set of the non-nil results of calling transform with each element of the sequence.
+    @inlinable func compactMapSet<T>(_ transform: (Element) throws -> T?) rethrows -> Set<T> {
+        .init(try compactMap(transform))
     }
 
     /// Returns the maximum element in the sequence, using the given key path as the comparison between elements.
