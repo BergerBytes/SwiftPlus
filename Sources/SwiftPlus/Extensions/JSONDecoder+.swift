@@ -24,8 +24,19 @@ public extension JSONDecoder {
     /// ```
     ///
     /// - Parameter configure: The configuration closure.
-    convenience init(_ configure: (JSONDecoder) -> Void) {
+    @inlinable convenience init(_ configure: (JSONDecoder) -> Void) {
         self.init()
         configure(self)
+    }
+}
+
+public extension JSONDecoder.DateDecodingStrategy {
+    static let iso8601withFractionalSeconds = custom { decoder throws -> Date in
+        let container = try decoder.singleValueContainer()
+        let string = try container.decode(String.self)
+        if let date = Formatter.iso8601withFractionalSeconds.date(from: string) ?? Formatter.iso8601.date(from: string) {
+            return date
+        }
+        throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid date: \(string)")
     }
 }

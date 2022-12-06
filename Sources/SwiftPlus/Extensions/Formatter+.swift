@@ -14,25 +14,12 @@
 
 import Foundation
 
-public extension JSONEncoder {
-    /// Convenience initializer for clean creation of JSONEncoder with configuration on a single line.
-    ///
-    /// ```
-    /// let encoder = JSONEncoder {
-    ///     $0.dateEncodingStrategy = .iso8601
-    /// }
-    /// ```
-    ///
-    /// - Parameter configure: The configuration closure.
-    @inlinable convenience init(_ configure: (JSONEncoder) -> Void) {
-        self.init()
-        configure(self)
-    }
-}
+extension Formatter {
+    static let iso8601withFractionalSeconds: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return formatter
+    }()
 
-public extension JSONEncoder.DateEncodingStrategy {
-    static let iso8601withFractionalSeconds = custom { date, encoder throws in
-        var container = encoder.singleValueContainer()
-        try container.encode(Formatter.iso8601withFractionalSeconds.string(from: date))
-    }
+    static let iso8601 = ISO8601DateFormatter()
 }
