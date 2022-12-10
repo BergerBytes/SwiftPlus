@@ -102,3 +102,22 @@ public extension RangeReplaceableCollection {
         return remove(at: index)
     }
 }
+
+public extension Set {
+    /// Inserts the non-nil elements of the given sequence into the set.
+    ///
+    /// If the set already contains one or more elements that are also in
+    /// `other`, the existing members are kept. If `other` contains multiple
+    /// instances of equivalent elements, only the first instance is kept.
+    ///
+    ///     var attendees: Set = ["Alicia", "Bethany", "Diana"]
+    ///     let visitors = ["Diana", "Marcia", "Nathaniel"]
+    ///     attendees.formUnion(visitors)
+    ///     print(attendees)
+    ///     // Prints "["Diana", "Nathaniel", "Bethany", "Alicia", "Marcia"]"
+    ///
+    /// - Parameter other: A sequence of elements. `other` must be finite.
+    @inlinable mutating func compactFormUnion(_ other: some Sequence<Element?>) {
+        formUnion(other.compactMap { $0 })
+    }
+}
