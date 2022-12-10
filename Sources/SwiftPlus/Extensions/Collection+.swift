@@ -12,6 +12,8 @@
 //  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+import Algorithms
+
 public extension Collection {
     @inlinable var isNotEmpty: Bool {
         !isEmpty
@@ -123,6 +125,10 @@ public extension Set {
     ///
     /// - Parameter other: A sequence of elements. `other` must be finite.
     @inlinable mutating func compactFormUnion(_ other: some Sequence<Element?>) {
-        formUnion(other.compactMap { $0 })
+        formUnion(other.compacted())
+    }
+
+    @inlinable func compactUnion(_ other: some Collection<Element?>) -> Set<Element> {
+        union(other.compacted())
     }
 }
