@@ -86,6 +86,11 @@ public extension Collection {
             a[keyPath: keyPath] < b[keyPath: keyPath]
         }
     }
+
+    /// Returns an array containing the non-nil elements of this sequence.
+    @inlinable func compact() -> [Element] {
+        compactMap { $0 }
+    }
 }
 
 public extension RangeReplaceableCollection {
