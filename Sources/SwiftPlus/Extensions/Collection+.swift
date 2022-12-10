@@ -108,6 +108,15 @@ public extension RangeReplaceableCollection {
 
         return remove(at: index)
     }
+
+    /// This function appends the contents of the given sequence of new elements to the current collection and returns the resulting collection.
+    ///
+    /// - Parameter newElements: A sequence of elements to append to the collection.
+    @inlinable func appended(contentsOf newElements: some Sequence<Element>) -> Self {
+        var new = self
+        new.append(contentsOf: newElements)
+        return new
+    }
 }
 
 public extension Set {
