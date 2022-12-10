@@ -23,7 +23,7 @@ public final class ConcurrentQueue<Element: Sendable> {
         internalQueue = .init()
     }
 
-    public init<Collection: Sequence>(_ sequence: Collection) where Collection.Element == Element {
+    public init(_ sequence: some Sequence<Element>) {
         internalQueue = .init(sequence)
     }
 }
@@ -120,11 +120,11 @@ public extension ConcurrentQueue {
         return internalQueue.peekAll
     }
 
-    func removeAll(keepingCapacity keepCapacity: Bool = false) {
+    func removeAll() {
         defer { lock.unlock() }
         lock.lock()
 
-        internalQueue.removeAll(keepingCapacity: keepCapacity)
+        internalQueue.removeAll()
     }
 }
 
@@ -134,12 +134,5 @@ internal extension ConcurrentQueue {
         lock.lock()
 
         return internalQueue._array
-    }
-
-    var _head: Int {
-        defer { lock.unlock() }
-        lock.lock()
-
-        return internalQueue._head
     }
 }
