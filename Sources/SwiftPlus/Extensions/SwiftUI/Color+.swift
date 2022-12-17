@@ -21,8 +21,7 @@
         import AppKit
     #endif
 
-    @available(macOS 10.15, *)
-    @available(iOS 13.0, *)
+    @available(iOS 13.0, macOS 10.15, watchOS 7.0, tvOS 14.0, *)
     public extension Color {
         init(hex: UInt, alpha: Double = 1) {
             self.init(

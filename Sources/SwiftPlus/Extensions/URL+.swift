@@ -16,8 +16,7 @@ import Foundation
 import UniformTypeIdentifiers
 
 public extension URL {
-    @available(iOS 14.0, *)
-    @available(macOS 11.0, *)
+    @available(iOS 14.0, macOS 11.0, watchOS 9.0, tvOS 14.0, *)
     @inlinable
     func mimeType() -> String {
         if let mimeType = UTType(filenameExtension: pathExtension)?.preferredMIMEType {
