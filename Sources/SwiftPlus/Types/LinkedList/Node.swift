@@ -18,7 +18,7 @@ extension LinkedList {
     class Node<Element> {
         var value: Element
         var next: Node<Element>?
-        var previous: Node<Element>?
+        weak var previous: Node<Element>?
 
         init(value: Element) {
             self.value = value

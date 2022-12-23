@@ -23,6 +23,7 @@ public final class Queue<Element: Sendable> {
     public var _internalLinkedList = LinkedList<Element>()
 
     @inlinable public var isEmpty: Bool { _internalLinkedList.isEmpty }
+    @inlinable public var isNotEmpty: Bool { !isEmpty }
     @inlinable public var count: Int { _internalLinkedList.count }
 
     public init() { }
