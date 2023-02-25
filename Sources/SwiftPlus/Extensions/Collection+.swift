@@ -46,6 +46,21 @@ public extension Collection {
         return false
     }
 
+    /// Returns false if any predicate returns true.
+    ///
+    /// Once a predicate returns true the function returns and execution stops.
+    /// - Parameter predicate: Predicate to invoke for each element.
+    /// - Returns: Returns false if any predicate returns true.
+    @inlinable func none(match predicate: (Self.Element) throws -> Bool) rethrows -> Bool {
+        for element in self {
+            if try predicate(element) {
+                return false
+            }
+        }
+
+        return true
+    }
+
     /// Returns true if all predicates returns true.
     ///
     /// Once a predicate returns false the function returns and execution stops.
