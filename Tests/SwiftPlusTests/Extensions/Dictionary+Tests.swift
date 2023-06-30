@@ -17,7 +17,7 @@ import Quick
 @testable import SwiftPlus
 
 final class DictionaryTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("Dictionary") {
             describe("Map Keys") {
                 describe("mapUniqueKeys(transform:)") {

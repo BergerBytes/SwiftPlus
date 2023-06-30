@@ -17,7 +17,7 @@ import Quick
 @testable import SwiftPlus
 
 final class CollectionTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("Collection") {
             describe("safe subscript") {
                 it("is not nil for in bounds index") {

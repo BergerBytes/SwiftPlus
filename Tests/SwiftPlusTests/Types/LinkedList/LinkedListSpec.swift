@@ -18,7 +18,7 @@ import Quick
 @testable import SwiftPlus
 
 class LinkedListSpec: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("LinkedList") {
             var list: LinkedList<Int>!
 

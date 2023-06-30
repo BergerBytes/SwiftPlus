@@ -17,7 +17,7 @@ import Quick
 @testable import SwiftPlus
 
 final class OptionalTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("Optional") {
             describe("isNil") {
                 it("object is nil") {

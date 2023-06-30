@@ -25,7 +25,7 @@ final class IgnoreCodableTests: QuickSpec {
         var notCoded: String?
     }
 
-    override func spec() {
+    override class func spec() {
         describe("IgnoreCodable") { }
     }
 }

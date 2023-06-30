@@ -18,7 +18,7 @@ import Quick
 @testable import SwiftPlus
 
 final class QueueTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("Queue") {
             describe("init") {
                 it("creates empty queue on init") {

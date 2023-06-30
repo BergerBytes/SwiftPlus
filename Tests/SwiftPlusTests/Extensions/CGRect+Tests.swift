@@ -18,7 +18,7 @@ import Quick
 @testable import SwiftPlus
 
 final class CGRectTests: QuickSpec {
-    override func spec() {
+    override class func spec() {
         describe("CGRect") {
             describe("Center") {
                 it("can init with center") {
