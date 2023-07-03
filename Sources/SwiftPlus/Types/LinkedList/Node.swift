@@ -15,12 +15,12 @@
 import Foundation
 
 extension LinkedList {
-    class Node<Element> {
-        var value: Element
-        var next: Node<Element>?
-        weak var previous: Node<Element>?
+    class Node<E> {
+        var value: E
+        var next: Node<E>?
+        weak var previous: Node<E>?
 
-        init(value: Element) {
+        init(value: E) {
             self.value = value
         }
     }
