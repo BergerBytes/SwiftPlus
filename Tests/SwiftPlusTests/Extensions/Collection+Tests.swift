@@ -52,7 +52,7 @@ final class CollectionTests: QuickSpec {
                 }
 
                 it("is false for empty array") {
-                    let array = []
+                    let array = [Int]()
                     expect(array.isNotEmpty).to(beFalse())
                 }
             }
