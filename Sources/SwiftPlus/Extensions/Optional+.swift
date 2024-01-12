@@ -22,4 +22,16 @@ public extension Optional {
     @inlinable var isNotNil: Bool {
         self != nil
     }
+
+    @inlinable func transform<T>(_ transform: (Self) throws -> T?) rethrows -> T? {
+        try transform(self)
+    }
+
+    @inlinable func unwrappedTransform<T>(_ transform: (Wrapped) throws -> T?) rethrows -> T? {
+        if let self {
+            return try transform(self)
+        }
+
+        return nil
+    }
 }

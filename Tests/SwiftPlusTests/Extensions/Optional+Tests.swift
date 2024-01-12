@@ -42,6 +42,30 @@ final class OptionalTests: QuickSpec {
                     expect(foo.isNotNil).to(beTrue())
                 }
             }
+            
+            describe("transform") {
+                it("passes the optional") {
+                    let foo: Int? = 5
+                    expect(foo.transform { String($0 ?? -1) }).to(equal("5"))
+                }
+                
+                it("passes a nil") {
+                    let foo: Int? = nil
+                    expect(foo.transform { String($0 ?? -1) }).to(equal("-1"))
+                }
+            }
+            
+            describe("unwrappedTransform") {
+                it("passes the unwrapped value") {
+                    let foo: Int? = 5
+                    expect(foo.unwrappedTransform { String($0) }).to(equal("5"))
+                }
+                
+                it("never calls the closure and returns nil") {
+                    let foo: Int? = nil
+                    expect(foo.unwrappedTransform { String($0) }).to(beNil())
+                }
+            }
         }
     }
 }
