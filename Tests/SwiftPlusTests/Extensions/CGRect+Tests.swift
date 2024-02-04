@@ -138,6 +138,72 @@ final class CGRectTests: QuickSpec {
                     }
                 }
             }
+
+            describe("subdivide") {
+                describe("top left") {
+                    it("zero origin") {
+                        let rect = CGRect(origin: .zero, size: .init(width: 100, height: 100))
+                            .topLeftRect
+                        expect(rect.origin).to(equal(.zero))
+                        expect(rect.size).to(equal(.init(width: 50, height: 50)))
+                    }
+                    
+                    it("non zero origin") {
+                        let rect = CGRect(origin: .init(x: 50, y: 50), size: .init(width: 100, height: 100))
+                            .topLeftRect
+                        expect(rect.origin).to(equal(.init(x: 50, y: 50)))
+                        expect(rect.size).to(equal(.init(width: 50, height: 50)))
+                    }
+                }
+                
+                describe("top right") {
+                    it("zero origin") {
+                        let rect = CGRect(origin: .zero, size: .init(width: 100, height: 100))
+                            .topRightRect
+                        expect(rect.origin).to(equal(.init(x: 50, y: 0)))
+                        expect(rect.size).to(equal(.init(width: 50, height: 50)))
+                    }
+                    
+                    it("non zero origin") {
+                        let rect = CGRect(origin: .init(x: 50, y: 50), size: .init(width: 100, height: 100))
+                            .topRightRect
+                        expect(rect.origin).to(equal(.init(x: 100, y: 50)))
+                        expect(rect.size).to(equal(.init(width: 50, height: 50)))
+                    }
+                }
+                
+                describe("bottom left") {
+                    it("zero origin") {
+                        let rect = CGRect(origin: .zero, size: .init(width: 100, height: 100))
+                            .bottomLeftRect
+                        expect(rect.origin).to(equal(.init(x: 0, y: 50)))
+                        expect(rect.size).to(equal(.init(width: 50, height: 50)))
+                    }
+                    
+                    it("non zero origin") {
+                        let rect = CGRect(origin: .init(x: 50, y: 50), size: .init(width: 100, height: 100))
+                            .bottomLeftRect
+                        expect(rect.origin).to(equal(.init(x: 50, y: 100)))
+                        expect(rect.size).to(equal(.init(width: 50, height: 50)))
+                    }
+                }
+                
+                describe("bottom right") {
+                    it("zero origin") {
+                        let rect = CGRect(origin: .zero, size: .init(width: 100, height: 100))
+                            .bottomRightRect
+                        expect(rect.origin).to(equal(.init(x: 50, y: 50)))
+                        expect(rect.size).to(equal(.init(width: 50, height: 50)))
+                    }
+                    
+                    it("non zero origin") {
+                        let rect = CGRect(origin: .init(x: 50, y: 50), size: .init(width: 100, height: 100))
+                            .bottomRightRect
+                        expect(rect.origin).to(equal(.init(x: 100, y: 100)))
+                        expect(rect.size).to(equal(.init(width: 50, height: 50)))
+                    }
+                }
+            }
         }
     }
 }

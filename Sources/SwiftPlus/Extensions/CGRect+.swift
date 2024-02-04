@@ -94,3 +94,23 @@ public extension CGRect {
         pow(width, 2) + pow(height, 2)
     }
 }
+
+// MARK: - CGRect + Subdivide
+
+public extension CGRect {
+    @inlinable var topLeftRect: CGRect {
+        CGRect(x: minX, y: minY, width: width * 0.5, height: height * 0.5)
+    }
+
+    @inlinable var topRightRect: CGRect {
+        CGRect(x: midX, y: minY, width: width * 0.5, height: height * 0.5)
+    }
+
+    @inlinable var bottomLeftRect: CGRect {
+        CGRect(x: minX, y: midY, width: width * 0.5, height: height * 0.5)
+    }
+
+    @inlinable var bottomRightRect: CGRect {
+        CGRect(x: midX, y: midY, width: width * 0.5, height: height * 0.5)
+    }
+}
