@@ -96,6 +96,19 @@ class LinkedListSpec: QuickSpec {
                 let removedElements = list.removeAll(where: { $0 == 2 })
                 expect(removedElements).to(equal([2]))
             }
+            
+            describe("Sequence") {
+                it("iterates through the linked list") {
+                    let array = [1,2,3,4,5,6,7,8,9,8,7,6,5,4,3,2,1].shuffled()
+                    list = LinkedList<Int>(array)
+                    
+                    var i = 0
+                    for item in list {
+                        expect(item).to(equal(array[i]))
+                        i += 1
+                    }
+                }
+            }
         }
     }
 }

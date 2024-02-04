@@ -63,7 +63,7 @@ public class LinkedList<Element> {
         return count
     }
 
-    public init() { }
+    public init() {}
 
     /// Initializes a new linked list with the elements of a sequence.
     ///
@@ -324,5 +324,25 @@ public extension LinkedList {
         }
 
         return elements
+    }
+}
+
+extension LinkedList: Sequence {
+    public struct LinkedListIterator: IteratorProtocol {
+        private var current: Node<Element>?
+
+        fileprivate init(startAt node: Node<Element>?) {
+            current = node
+        }
+
+        public mutating func next() -> Element? {
+            guard let node = current else { return nil }
+            current = node.next
+            return node.value
+        }
+    }
+
+    public func makeIterator() -> LinkedListIterator {
+        return LinkedListIterator(startAt: head)
     }
 }
