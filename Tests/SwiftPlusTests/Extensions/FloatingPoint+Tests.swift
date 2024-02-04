@@ -13,13 +13,21 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import Foundation
+import Nimble
+import Quick
+@testable import SwiftPlus
 
-extension FloatingPoint {
-    @inlinable var isNotNan: Bool {
-        !isNaN
-    }
-
-    @inlinable func squared() -> Self {
-        self * self
+final class FloatingPointTests: QuickSpec {
+    override class func spec() {
+        describe("FloatingPoint") {
+            it("squared") {
+                expect(Float(5).squared()).to(equal(25))
+                expect(Float(4.5).squared()).to(equal(20.25))
+                expect(Double(10).squared()).to(equal(100))
+                expect(Double(3.5).squared()).to(equal(12.25))
+                expect(CGFloat(3.5).squared()).to(equal(12.25))
+                expect(CGFloat(10).squared()).to(equal(100))
+            }
+        }
     }
 }
