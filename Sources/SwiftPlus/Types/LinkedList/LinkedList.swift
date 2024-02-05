@@ -1,4 +1,4 @@
-//  Copyright © 2022 BergerBytes LLC. All rights reserved.
+//  Copyright © 2024 BergerBytes LLC. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -63,7 +63,7 @@ public class LinkedList<Element> {
         return count
     }
 
-    public init() {}
+    public init() { }
 
     /// Initializes a new linked list with the elements of a sequence.
     ///
@@ -142,7 +142,7 @@ public class LinkedList<Element> {
     /// node to `nil` to remove the old tail node from the list. If the list is now empty, it sets the
     /// `head` pointer to `nil` as well. Finally, it returns the value of the old tail node.
     ///
-    /// This function has a time complexity of O(1).
+    /// - Complexity: O(1)
     ///
     /// - Returns: The value of the last element in the linked list, or `nil` if the list is empty.
     @discardableResult
@@ -195,16 +195,31 @@ public class LinkedList<Element> {
 }
 
 public extension LinkedList {
-    /// Removes the first element in the linked list that matches a given predicate.
+    /// Removes the first element from the linked list that satisfies a specified predicate.
     ///
-    /// This function takes a predicate as an argument and iterates through the elements in the list until
-    /// it finds an element that matches the predicate. If it finds a matching element, it removes it from
-    /// the list by updating the `next` and `previous` pointers of the surrounding nodes.
+    /// This function iterates through the linked list, searching for the first element that matches the provided predicate. Upon finding such an element, the function excises it from the list. This is accomplished by adjusting the `next` and `previous` pointers of the neighboring nodes, thereby unlinking the target node from the list.
     ///
-    /// This function has a time complexity of O(n), where n is the number of elements in the linked list.
+    /// The operation halts as soon as the first matching element is found and removed, making it unnecessary to traverse the entire list if the matching element is located early in the sequence.
     ///
-    /// - Parameter predicate: The predicate to use when searching for the element to remove.
-    /// - Returns: The removed element, or `nil` if no matching element was found.
+    /// - Note: The `@discardableResult` attribute allows the caller to opt out of handling the function's return value without receiving a compiler warning. This is particularly useful when the caller is interested only in the side effect (removal of the element) rather than the value of the removed element.
+    /// - Complexity: O(n) in the worst case, where n is the number of elements in the linked list. In the best case, when the element to be removed is near the start of the list, the complexity is O(1).
+    /// - Parameter predicate: A closure that takes an element of the linked list as its argument and returns a Boolean. The function removes the first element for which this closure returns `true`.
+    /// - Returns: The removed element if a matching element is found, otherwise `nil`.
+    ///
+    /// Example:
+    ///
+    /// ```
+    /// let list = LinkedList<Int>()
+    /// list.append(1)
+    /// list.append(2)
+    /// list.append(3)
+    ///
+    /// // Remove the first even number from the list
+    /// if let removedElement = list.removeFirst(where: { $0 % 2 == 0 }) {
+    ///     print(removedElement)  // Output: 2
+    /// }
+    /// print(list.allElements())  // Output: [1, 3]
+    /// ```
     @discardableResult
     func removeFirst(where predicate: (Element) -> Bool) -> Element? {
         var currentNode = head
@@ -248,17 +263,17 @@ public extension LinkedList {
         return nil
     }
 
-    /// Removes all elements that match a given predicate and return them as an array.
+    /// Removes all elements from the linked list that satisfy the given predicate and returns them as an array.
     ///
-    /// This extension adds a new function called `removeAll(where:)` to the `LinkedList` class. This
-    /// function takes a predicate as an argument and removes all of the elements in the list that match
-    /// the predicate. It also returns the removed elements as an array. To do this, it iterates through
-    /// the list using a while loop and checks each element to see if it matches the predicate. If it
-    /// does, it removes the element from the list by updating the `next` and `previous` pointers of the
-    /// surrounding nodes, and it also adds the element to the array of removed elements.
+    /// This function, `removeAll(where:)`, enhances the `LinkedList` class by providing the ability to remove elements based on a predicate. It traverses the linked list, evaluating each element against the provided predicate. When an element meets the condition (predicate returns `true`), the function removes it from the list and adds it to an array of removed elements. This is achieved by efficiently updating the `next` and `previous` pointers of the adjacent nodes, effectively excising the node from the list.
     ///
-    /// This function uses the `Equatable` protocol to compare the elements in the list, so it will only
-    /// work if the element type of the linked list conforms to that protocol.
+    /// The function does not rely on the `Equatable` protocol to compare elements. Instead, it accepts any predicate, allowing for versatile removal criteria.
+    ///
+    /// - Note: The `@discardableResult` attribute permits ignoring the function's return value without compiler warnings, catering to use-cases focused solely on the side effects (element removal).
+    /// - Complexity: Time: O(n), where n is the number of elements in the linked list. The function inspects each element once.
+    /// - Complexity: Space: O(m), where m is the number of elements removed. This space is allocated for the array of removed elements.
+    /// - Parameter predicate: A closure that takes an element of the linked list as its argument and returns a Boolean. Elements for which the predicate returns `true` are removed from the list and added to the returned array.
+    /// - Returns: An array of elements that were removed from the linked list.
     ///
     /// Example:
     ///
@@ -268,9 +283,10 @@ public extension LinkedList {
     /// list.append(2)
     /// list.append(3)
     ///
-    /// let removedElements = list.removeAll(where: { $0 == 2 })
-    /// // removedElements will be [2]
-    /// // the list now contains only the elements 1 and 3
+    /// // Remove all even numbers from the list
+    /// let removedElements = list.removeAll(where: { $0 % 2 == 0 })
+    /// print(removedElements)  // Output: [2]
+    /// print(list.allElements())  // Output: [1, 3]
     /// ```
     @discardableResult
     func removeAll(where predicate: (Element) -> Bool) -> [Element] {
@@ -299,6 +315,30 @@ public extension LinkedList {
         return elements
     }
 
+    /// Removes all elements from the linked list that satisfy the given predicate and returns them as an array of a specified type.
+    ///
+    /// This method iterates through the linked list, evaluating each element using the given predicate. If the predicate returns a non-nil value (indicating a match), the element is removed from the linked list, and the result of the predicate (converted value) is added to the result array. The method efficiently updates the internal structure of the linked list by modifying the `next` and `previous` pointers of the nodes surrounding the removed node.
+    ///
+    /// - Note: The `@discardableResult` attribute allows callers to ignore the return value of the method without a compiler warning, useful when the caller is only interested in the side effect of removing elements.
+    /// - Complexity: Time: O(n), where n is the number of elements in the linked list. The method iterates through each element at most once.
+    /// - Complexity: Space: O(m), where m is the number of elements removed (size of the returned array). This space is used to store the converted values of the elements removed.
+    /// - Parameter predicate: A closure that takes an element of the linked list as its argument and returns an optional value of type `R`. If the return value is non-nil, the element is removed from the linked list, and its converted value is added to the return array.
+    /// - Returns: An array of type `R`, containing the converted values of the elements removed from the linked list.
+    ///
+    /// Example:
+    ///
+    /// ```
+    /// let list = LinkedList<Int>()
+    /// list.append(1)
+    /// list.append(2)
+    /// list.append(3)
+    /// list.append(4)
+    ///
+    /// // Remove all even numbers from the list and return them as strings
+    /// let removedElements: [String] = list.removeAll { $0 % 2 == 0 ? "\($0)" : nil }
+    /// print(removedElements)  // Output: ["2", "4"]
+    /// print(list.allElements())  // Output: [1, 3]
+    /// ```
     @discardableResult
     func removeAll<R>(where predicate: (Element) -> R?) -> [R] {
         var elements = [R]()
@@ -343,6 +383,6 @@ extension LinkedList: Sequence {
     }
 
     public func makeIterator() -> LinkedListIterator {
-        return LinkedListIterator(startAt: head)
+        LinkedListIterator(startAt: head)
     }
 }
