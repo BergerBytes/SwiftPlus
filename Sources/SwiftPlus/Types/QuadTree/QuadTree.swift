@@ -14,6 +14,7 @@
 
 import Foundation
 
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 8.0, *)
 public class QuadTree<Element: QuadTreeElement> {
     var root: Node<Element>?
     public let minimumQuadSize: CGFloat
@@ -85,13 +86,14 @@ public class QuadTree<Element: QuadTreeElement> {
     }
 
     private func subdivide(node: Node<Element>) {
-        node.topLeft = Node(region: node.region.topLeftRect)
-        node.topRight = Node(region: node.region.topRightRect)
-        node.bottomLeft = Node(region: node.region.bottomLeftRect)
-        node.bottomRight = Node(region: node.region.bottomRightRect)
+        node.topLeft = Node(region: node.region.topLeftRect, parent: node)
+        node.topRight = Node(region: node.region.topRightRect, parent: node)
+        node.bottomLeft = Node(region: node.region.bottomLeftRect, parent: node)
+        node.bottomRight = Node(region: node.region.bottomRightRect, parent: node)
     }
 }
 
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 8.0, *)
 public extension QuadTree {
     // Search for elements containing the point
     func search(point: CGPoint) -> [Element] {
@@ -166,7 +168,54 @@ public extension QuadTree {
     }
 }
 
-public protocol QuadTreeElement {
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 8.0, *)
+public extension QuadTree {
+    @discardableResult
+    func remove(element: Element) -> Bool {
+        guard let root = root else {
+            return false
+        }
+        return remove(node: root, element: element, currentDepth: 0)
+    }
+
+    private func remove(node: Node<Element>, element: Element, currentDepth: Int) -> Bool {
+        guard node.region.contains(element.bounds.center) else {
+            return false
+        }
+
+        if node.elements.removeFirst(where: { $0.id == element.id }).isNotNil {
+            return true
+        }
+
+        if node.topLeft != nil {
+            let removed = remove(node: node.topLeft!, element: element, currentDepth: currentDepth + 1) ||
+                remove(node: node.topRight!, element: element, currentDepth: currentDepth + 1) ||
+                remove(node: node.bottomLeft!, element: element, currentDepth: currentDepth + 1) ||
+                remove(node: node.bottomRight!, element: element, currentDepth: currentDepth + 1)
+
+            if removed {
+                attemptCollapseIfPossible(node: node, currentDepth: currentDepth)
+            }
+            return removed
+        }
+
+        return false
+    }
+
+    private func attemptCollapseIfPossible(node: Node<Element>, currentDepth: Int) {
+        guard let parent = node.parent else { return }
+
+        if node.isEmpty, parent.allChildrenAreEmpty, currentDepth < maxDepth {
+            parent.topLeft = nil
+            parent.topRight = nil
+            parent.bottomLeft = nil
+            parent.bottomRight = nil
+        }
+    }
+}
+
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 8.0, *)
+public protocol QuadTreeElement: Identifiable {
     var bounds: CGRect { get }
 }
 
@@ -175,6 +224,7 @@ public protocol Bounded {
     func intersects(region: CGRect) -> Bool
 }
 
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 8.0, *)
 public extension QuadTree {
     class Node<T: QuadTreeElement> {
         var elements = LinkedList<T>()
@@ -184,12 +234,27 @@ public extension QuadTree {
         var bottomLeft: Node<T>?
         var bottomRight: Node<T>?
 
-        init(region: CGRect) {
+        weak var parent: QuadTree.Node<Element>?
+
+        init(region: CGRect, parent: QuadTree.Node<Element>? = nil) {
             self.region = region
+            self.parent = parent
+        }
+
+        var isEmpty: Bool {
+            elements.isEmpty && topLeft == nil
+        }
+
+        var allChildrenAreEmpty: Bool {
+            topLeft?.isEmpty ?? true &&
+                topRight?.isEmpty ?? true &&
+                bottomLeft?.isEmpty ?? true &&
+                bottomRight?.isEmpty ?? true
         }
     }
 }
 
+@available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 8.0, *)
 extension QuadTree: CustomDebugStringConvertible {
     public var debugDescription: String {
         func visualizeNode(_ node: Node<Element>?, depth: Int, prefix: String) -> String {
