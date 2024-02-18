@@ -189,3 +189,26 @@ public extension QuadTree {
         }
     }
 }
+
+extension QuadTree: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        func visualizeNode(_ node: Node<Element>?, depth: Int, prefix: String) -> String {
+            guard let node = node, depth < maxDepth else { return prefix + "• (Empty)\n" }
+
+            var result = prefix + "• Region: \(node.region)\n"
+            result += prefix + "  Elements: [\(node.elements.map { String(describing: $0.bounds) }.joined(separator: ", "))]\n"
+
+            // Adjust the visual spacing based on depth
+            let newPrefix = prefix + "  "
+
+            result += visualizeNode(node.topLeft, depth: depth + 1, prefix: newPrefix + "├── TL: ")
+            result += visualizeNode(node.topRight, depth: depth + 1, prefix: newPrefix + "├── TR: ")
+            result += visualizeNode(node.bottomLeft, depth: depth + 1, prefix: newPrefix + "├── BL: ")
+            result += visualizeNode(node.bottomRight, depth: depth + 1, prefix: newPrefix + "└── BR: ")
+
+            return result
+        }
+
+        return visualizeNode(root, depth: 0, prefix: "")
+    }
+}
